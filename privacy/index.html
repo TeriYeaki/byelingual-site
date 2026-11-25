@@ -57,7 +57,7 @@
 
       <h2 id="who-we-are">1. Who we are</h2>
       <p>Byelingual is a reading-practice app operated by its sole founder, Tharith Yeak, in Australia. In this policy, “Byelingual”, “we”, “us” and “our” mean the operator of the Byelingual app.</p>
-      <p>Byelingual has no user accounts. The app lets you paste or type text in a language you are learning and request an AI-generated “gloss card”.</p>
+      <p>Byelingual works without an account. You can choose to sign in with Apple or Google to keep energy and Premium on an account (section 4). The app lets you paste or type text in a language you are learning and request an AI-generated “gloss card”.</p>
       <p>Byelingual is in a beta test. For now, the iPhone app is available only through Apple’s TestFlight to people we invite, and cards are built on our test server, which works as this policy describes.</p>
       <p>For privacy questions or requests, contact:</p>
       <ul>
@@ -76,6 +76,7 @@
         <li>Byelingual’s server database keeps no readable text from your card requests. Request, usage and cost records are deleted after 90 days; a random install record is deleted after 90 days without use.</li>
         <li>While a card is built, its output waits on the server encrypted, so you can pick it up if you leave. It is deleted when the server receives your phone’s confirmation that it has it, or within about a day; extra translations and details within about 25 hours. The key stays on your phone, never in the server database.</li>
         <li>If you enable card-ready notifications on iPhone, Byelingual stores an Apple push token with your random install record. The alert contains no card text or sender name.</li>
+        <li>Signing in is optional. If you sign in with Apple or Google, our server keeps an account with your energy and Premium. Apple shares no name or email with us; from Google we keep only your email. You can delete the account in the app at any time (section 4).</li>
         <li>Handwriting practice is checked on your phone, and Write it is read there by Google’s ML Kit. Google never gets your writing. ML Kit is built into the app and sends Google technical data about the app and your phone, whether or not you use handwriting practice (section 6).</li>
       </ul>
 
@@ -119,6 +120,11 @@
       <h3>Card-ready notifications</h3>
       <p>On iPhone, Byelingual offers the system notification permission from <strong>Notify me when it’s ready</strong> while a long card is building. If you allow it, the app sends its Apple Push Notification service (APNs) device token and whether the token is for Apple’s development or production service to Byelingual’s server, together with the random install identity and app version. The server stores the token, environment and registration time with the install record. While notifications are on, the app keeps registering its current token, including after <strong>Delete everything</strong>. Whenever the app opens with notifications off, it asks the server once during that opening to forget the token; if the request fails, it tries again after the app is next restarted.</p>
       <p>When a card finishes, Byelingual may give Apple the device token, the random card request ID and a fixed alert titled “Your card is ready”. The notification contains no card text, language, meaning or sender name. Apple processes this information to deliver the notification.</p>
+
+      <h3>Accounts</h3>
+      <p>Signing in is optional and needs no password. When you sign in with Apple or Google, the provider confirms who you are, and Byelingual’s server, through Supabase Auth, creates an account the first time. The account holds the provider you chose, the provider’s ID for you, your energy, whether and until when you have Premium, and when the account was created and last used. Your random install record is linked to the account, with how that phone signed in.</p>
+      <p>Sign in with Apple asks Apple for no name and no email, so Apple shares neither. Google shares the email address of the Google account you choose, which the app shows to tell you which account is signed in. Google’s sign-in also includes your name and profile picture; our server discards them and keeps only the email. The phone keeps a sign-in session in its secure storage.</p>
+      <p><strong>Settings › Sign out</strong> unlinks that phone from the account; the account stays. <strong>Settings › Delete account</strong> deletes the account: its energy, Premium, the Supabase Auth record and every phone’s link to it. On iPhone, Apple asks you to confirm, and we ask Apple to revoke Byelingual’s Sign in with Apple link; after a Google sign-in, the phone asks Google to revoke Byelingual’s access. Deleting the account does not delete the cards on your phone. To stop one person collecting the sign-up energy again by deleting and re-creating an account, we keep a one-way fingerprint of the provider’s ID for you: a SHA-256 hash combined with a secret random value. It contains no name, email or readable ID, and is kept after the account is deleted.</p>
 
       <h3>What masking covers</h3>
       <p>The current on-device rules mask:</p>
@@ -229,6 +235,14 @@
               <td>Application logs are designed not to contain pasted text, camera images, pick-up keys or push tokens. They can contain request IDs, a hashed install ID, the app version, text size and phrase counts, model, route and prompt versions, timings, outcomes, token counts and cost. Push-related log entries can contain a hashed install ID, random request ID, app version, registration or delivery result, HTTP status and APNs error reason. Supabase keeps these logs, and its request logs with IP addresses, for 7 days. Daily database backups are kept for 7 days, so a deleted record can stay in a backup for up to 7 more days; held output in a backup stays encrypted, and its key is never in the database or its backups.</td>
             </tr>
             <tr>
+              <th scope="row">Account (if you sign in)</th>
+              <td>Kept until you delete it in the app, which removes it at once, subject to the 7-day database backups. Signing out keeps the account.</td>
+            </tr>
+            <tr>
+              <th scope="row">Deleted-account fingerprint</th>
+              <td>A one-way fingerprint of the provider’s ID, with no name or email, kept after the account is deleted so the sign-up energy is given only once.</td>
+            </tr>
+            <tr>
               <th scope="row">OpenAI API abuse-monitoring logs</th>
               <td>Under default controls, up to 30 days, with the limited legal and harm exceptions described above.</td>
             </tr>
@@ -253,10 +267,10 @@
       <h2 id="your-choices-and-privacy-requests">10. Your choices and privacy requests</h2>
       <p>You control whether to submit text. Before the first cloud card build, the app explains the OpenAI processing and asks you to choose <strong>Continue</strong> or <strong>Not now</strong>. You can edit the selection, remove private details, choose <strong>Not now</strong> or avoid the cloud card feature.</p>
       <p>After permission is given, you can turn off <strong>Settings › Privacy › Send text to build cards</strong>. Turning it off stops future cloud card builds and the app asks again before another build. It does not undo completed processing or immediately erase OpenAI logs subject to its retention rules.</p>
-      <p>You can delete local items individually or use <strong>Delete everything</strong> for the local data listed in its confirmation screen. Because there is no account, local deletion does not automatically identify or erase server records.</p>
+      <p>You can delete local items individually or use <strong>Delete everything</strong> for the local data listed in its confirmation screen. Local deletion does not erase server records or an account. If you signed in, <strong>Settings › Delete account</strong> deletes the account as section 4 describes.</p>
       <p>Handwriting practice is optional. In Learn, you can turn off <strong>Practise handwriting</strong> for a language: this removes its handwriting reader from the phone and keeps what you have practised. It does not stop the technical data that Google’s ML Kit sends to Google (section 6). The app has no setting for that, so the only way to stop it is to stop using the app or uninstall it. We cannot look up or delete that data for you, because we never receive it.</p>
       <p>You may email <a href="mailto:support@byelingual.app">support@byelingual.app</a> to ask what personal information we hold about you, request correction or deletion, object to or restrict processing where applicable, withdraw consent where processing relies on consent, or ask for a portable copy where the law provides that right. We may need enough information to verify the request and locate the relevant record. Some rights have legal exceptions.</p>
-      <p>Because there is no account, our server records are linked only to a random install ID that the app does not show you, so we usually cannot tell which records are yours. A daily clean-up deletes request and usage records after 90 days, and an install record after about 90 days without use. If you write to us, we will tell you what we can find and delete what we can.</p>
+      <p>Unless you sign in, our server records are linked only to a random install ID that the app does not show you, so we usually cannot tell which records are yours. A daily clean-up deletes request and usage records after 90 days, and an install record after about 90 days without use. If you write to us, we will tell you what we can find and delete what we can.</p>
       <p>If Australian privacy law applies to our handling and you are not satisfied with our response, you may complain to the <a href="https://www.oaic.gov.au/privacy/privacy-complaints">Office of the Australian Information Commissioner</a>. If EU or UK data-protection law applies, you may also complain to the data-protection authority where you live or work. EU or UK rights can include access, correction, deletion, restriction, objection and portability, depending on the circumstances.</p>
 
       <h2 id="eu-uk-processing">11. Legal bases for EU/UK processing</h2>
@@ -290,6 +304,7 @@
       <p>We may update this policy when the app, providers or law changes. We will publish the new version at <a href="https://teriyeaki.github.io/byelingual-site/privacy/">https://teriyeaki.github.io/byelingual-site/privacy/</a> and change the effective date. If a change materially affects how previously collected personal information is used, we will provide a prominent in-app notice and request new permission where required before the new use begins.</p>
       <h3>Policy history</h3>
       <ul>
+        <li>[NEW EFFECTIVE DATE] — accounts: optional sign-in with Apple or Google, what an account holds, Sign out, Delete account and the fingerprint kept after deletion (sections 1, 2, 4, 7 and 10).</li>
         <li>24 November 2026 — handwriting practice: Trace and Write it are checked on the phone, and Google’s ML Kit, now built into the app, sends Google technical data (sections 2, 3, 5, 6, 7 and 10).</li>
         <li>9 November 2026 — first version.</li>
       </ul>
